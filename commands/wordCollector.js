@@ -1,24 +1,43 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');  
+const { SlashCommandBuilder } = require('@discordjs/builders');
 
 module.exports = {  
 	data: new SlashCommandBuilder()  
 		.setName('collector1')  
 		.setDescription('Collecting words till the word \"discord\"!'),  
-	async execute(interaction) {  
-		// `m` is a message object that will be passed through the filter function
-		//const filter = m => m.content.includes('discord');
-		//const collector = interaction.channel.createMessageCollector({ filter, time: 15000 });
+	async execute(interaction) {
+		interaction.reply("type discord");
 
-		client.on('message', message => {
-			if (message.content == `!collect`) {
-				// Create a message collector
-				const filter = m => (m.content.includes('discord') && m.author.id != client.user.id);
-				const channel = message.channel;
-				const collector = channel.createMessageCollector(filter, { time: 10000 });
-				console.log("collector started");
-				collector.on('collect', m => console.log(`Collected ${m.content}`));
-				collector.on('end', collected => console.log(`Collected ${collected.size} items`));
- 			}
+		const filter = m => {
+			return m.content.toLowerCase().includes('discord') && m.author.id === interaction.user.id
+		} // m is a message object that will be passed through the filter function
+		console.log(interaction.user.id);
+
+		const collector = interaction.channel.createMessageCollector({
+			filter,
+			max: 1,
+			time: 1000 * 10, //10 secs
+		})
+		//interaction.deferReply();
+		collector.on('collect', m => {
+			console.log(`Collected from ${m.author.id}`);
+			m.reply("Yes!");
 		});
+
+		console.log("here333");
+		collector.on('end', collected => {
+			if (collected.size === 0) {
+				interaction.channel.send(`<@${interaction.user.id}> You did not type discord.`)
+					.then(message => console.log(`Sent message: <@${interaction.user.id}> You did not type discord.`))
+					.catch(console.error);
+				return
+			}
+			let text = 'Collected:\n';
+			collected.forEach(m => {
+				text += `${m.content}\n`
+			})
+			interaction.channel.send(text)
+				.then(message => console.log(`Sent message: ${message.content}`))
+				.catch(console.error);
+		})
 	},  
 };
