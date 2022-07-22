@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout; // 注意这里！！！！！！
 
 module.exports = {

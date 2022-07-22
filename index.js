@@ -1,8 +1,9 @@
 const fs = require('fs');
-const { Client, Collection, Intents } = require('discord.js');  
+const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
+const { InteractionType } = require("discord-api-types/v10");
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, 1<<15] });
+const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
   
 const eventFiles = fs.readdirSync('./events').filter(file => file.endsWith('.js'));  
   
@@ -41,7 +42,7 @@ for (const fileArray of commandFiles) {
 
 client.once('ready', () => {});
 client.on('interactionCreate', async interaction => {
-    if (!interaction.isCommand()) return;
+    if (interaction.type !== InteractionType.ApplicationCommand) return;
 
     const command = client.commands.get(interaction.commandName);
 
