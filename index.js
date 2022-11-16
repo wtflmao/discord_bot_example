@@ -1,7 +1,6 @@
 const fs = require('fs');
-const { Client, Collection, GatewayIntentBits } = require('discord.js');
+const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { InteractionType } = require("discord-api-types/v10");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent] });
   
@@ -31,7 +30,7 @@ for (const fileArray of commandFiles) {
         const command = require(`./${file}`);
         client.commands.set(command.data.name, command);
 
-        // if any ‘aka' name exists
+        // if any 'aka' name exists
         if (command.akaNames != null && command.akaNames !== []) {
             for (let i = 0; i < command.akaNames.length; i++) {
                 client.commands.set(command.akaNames[i], command);
@@ -40,13 +39,16 @@ for (const fileArray of commandFiles) {
     }
 }
 
-client.once('ready', () => {});
-client.on('interactionCreate', async interaction => {
-    if (interaction.type !== InteractionType.ApplicationCommand) return;
+client.once(Events.ClientReady, () => {});
+client.on(Events.InteractionCreate, async interaction => {
+    if (!interaction.isChatInputCommand()) return;
 
     const command = client.commands.get(interaction.commandName);
 
-    if (!command) return;
+    if (!command) {
+        console.error(`No command matching ${interaction.commandName} was found.`);
+        return;
+    }
 
     try {
         await command.execute(interaction);
