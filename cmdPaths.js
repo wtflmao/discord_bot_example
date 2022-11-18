@@ -1,3 +1,3 @@
 module.exports = {
-    data: ["./commands", "./commands/utils"],
+    data: ["./commands", "./commands/utils", "./commands/buttons"],
 };
