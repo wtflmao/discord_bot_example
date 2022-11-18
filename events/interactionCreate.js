@@ -15,7 +15,7 @@ module.exports = {
 
 			try {
 				await command.execute(interaction);
-				console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an autocomplete interaction.`);
+				console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
 			} catch (error) {
 				console.error(`Error executing ${interaction.commandName}`);
 				console.error(error);
@@ -36,6 +36,9 @@ module.exports = {
 				console.error(error);
 			}
 
+		} else if (interaction.isButton()) {
+			console.log("a button!");
+			//await command.execute(interaction);
 		} else {
 			// not a command
 		}
