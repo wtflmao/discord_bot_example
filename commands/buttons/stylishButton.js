@@ -9,6 +9,7 @@ module.exports = {
 
         let button1 = [], button1d = [];
 
+        // generate 5 Primary buttons here
         for (let i = 1; i <= 5; i++) {
             button1.push(new ButtonBuilder()
                 // you need to make sure the customIDs are unique in the same reply message.
@@ -16,6 +17,8 @@ module.exports = {
                 .setLabel(`Click me(${i})!`)
                 .setStyle(ButtonStyle.Primary),);
         }
+
+        // generate 4 Primary disabled buttons
         for (let i = 1; i <= 4; i++) {
             button1d.push(new ButtonBuilder()
                 // you need to make sure the customIDs are unique in the same reply message.
@@ -24,6 +27,8 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true),);
         }
+
+        // put 5 buttons in one same row
         const rowPrimary = new ActionRowBuilder()
             .addComponents(button1);
 
@@ -67,6 +72,7 @@ module.exports = {
                     .setURL("https://support.discord.com/hc/en-us"),
             );
 
+        // put 4 disabled buttons in one same row
         const rowPrimaryD = new ActionRowBuilder()
             .addComponents(button1d);
 
@@ -108,7 +114,6 @@ module.exports = {
             );
 
         // we insert 3 rows here, every single button's customId should be unique in the same reply msg
-        // every row has different
         await interaction.reply({ content: 'These are some Primary buttons:', components: [rowPrimary, rowPrimaryD, rowPrimary2D], ephemeral: false });
 
         // two rows here
@@ -116,7 +121,11 @@ module.exports = {
 
         // only one row here
         await interaction.followUp({ content: 'These are two Success buttons. They are on the same row:', components: [rowSuccess], ephemeral: false });
+
+        // two rows here
         await interaction.followUp({ content: 'These are two Danger buttons. They are NOT on the same row:', components: [rowDanger, rowDangerD], ephemeral: false });
+
+        // two rows here
         await interaction.followUp({ content: 'These are two Link buttons. They are NOT on the same row:', components: [rowLink, rowLinkD], ephemeral: false });
     },
 };
