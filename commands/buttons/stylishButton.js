@@ -7,13 +7,25 @@ module.exports = {
 
     async execute(interaction) {
 
+        let button1 = [], button1d = [];
+
+        for (let i = 1; i <= 5; i++) {
+            button1.push(new ButtonBuilder()
+                // you need to make sure the customIDs are unique in the same reply message.
+                .setCustomId(`b1_${i}`)
+                .setLabel(`Click me(${i})!`)
+                .setStyle(ButtonStyle.Primary),);
+        }
+        for (let i = 1; i <= 4; i++) {
+            button1d.push(new ButtonBuilder()
+                // you need to make sure the customIDs are unique in the same reply message.
+                .setCustomId(`b1d_${i}`)
+                .setLabel(`Click me(${i})!`)
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true),);
+        }
         const rowPrimary = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('b1')
-                    .setLabel('Click me!')
-                    .setStyle(ButtonStyle.Primary),
-            );
+            .addComponents(button1);
 
         const rowSecondary = new ActionRowBuilder()
             .addComponents(
@@ -29,11 +41,18 @@ module.exports = {
                     .setCustomId('b3')
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Success),
+                new ButtonBuilder()
+                    .setCustomId('b3d')
+                    .setLabel("Click me!")
+                    .setStyle(ButtonStyle.Success)
+                    .setDisabled(true),
             );
 
         const rowDanger = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
+                    // you need to make sure the customIDs are unique in the same reply message.
+                    // here we use a random number generator to randomize IDs.
                     .setCustomId(`b4_${Math.floor(Math.random() * 100000)}`)
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Danger),
@@ -42,17 +61,20 @@ module.exports = {
         const rowLink = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    // you cant .setCustomId() to a Link button
+                    // you can't .setCustomId() to a Link button
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Link)
                     .setURL("https://support.discord.com/hc/en-us"),
             );
 
         const rowPrimaryD = new ActionRowBuilder()
+            .addComponents(button1d);
+
+        const rowPrimary2D = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
-                    .setCustomId('b1d')
-                    .setLabel('Click me!')
+                    .setCustomId(`owo`)
+                    .setLabel("owo")
                     .setStyle(ButtonStyle.Primary)
                     .setDisabled(true),
             );
@@ -63,15 +85,6 @@ module.exports = {
                     .setCustomId('b2d')
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Secondary)
-                    .setDisabled(true),
-            );
-
-        const rowSuccessD = new ActionRowBuilder()
-            .addComponents(
-                new ButtonBuilder()
-                    .setCustomId('b3d')
-                    .setLabel("Click me!")
-                    .setStyle(ButtonStyle.Success)
                     .setDisabled(true),
             );
 
@@ -94,10 +107,16 @@ module.exports = {
                     .setDisabled(true),
             );
 
-        await interaction.reply({ content: 'This is a Primary button:', components: [rowPrimary, rowPrimaryD], ephemeral: false });
-        await interaction.followUp({ content: 'This is a Secondary button:', components: [rowSecondary, rowSecondaryD], ephemeral: false });
-        await interaction.followUp({ content: 'This is a Success button:', components: [rowSuccess, rowSuccessD], ephemeral: false });
-        await interaction.followUp({ content: 'This is a Danger button:', components: [rowDanger, rowDangerD], ephemeral: false });
-        await interaction.followUp({ content: 'This is a Link button:', components: [rowLink, rowLinkD], ephemeral: false });
+        // we insert 3 rows here, every single button's customId should be unique in the same reply msg
+        // every row has different
+        await interaction.reply({ content: 'These are some Primary buttons:', components: [rowPrimary, rowPrimaryD, rowPrimary2D], ephemeral: false });
+
+        // two rows here
+        await interaction.followUp({ content: 'These are two Secondary buttons. They are NOT on the same row:', components: [rowSecondary, rowSecondaryD], ephemeral: false });
+
+        // only one row here
+        await interaction.followUp({ content: 'These are two Success buttons. They are on the same row:', components: [rowSuccess], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Danger buttons. They are NOT on the same row:', components: [rowDanger, rowDangerD], ephemeral: false });
+        await interaction.followUp({ content: 'These are two Link buttons. They are NOT on the same row:', components: [rowLink, rowLinkD], ephemeral: false });
     },
 };

@@ -7,44 +7,28 @@ module.exports = {
 
     async execute(interaction) {
 
-        const rowPrimary = new ActionRowBuilder()
+        const row = new ActionRowBuilder()
             .addComponents(
                 new ButtonBuilder()
                     .setCustomId('b1')
                     .setLabel('Click me!')
                     .setStyle(ButtonStyle.Primary)
                     .setEmoji('😀'),
-            );
-
-        const rowSecondary = new ActionRowBuilder()
-            .addComponents(
                 new ButtonBuilder()
                     .setCustomId('b2')
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Secondary)
                     .setEmoji('😁'),
-            );
-
-        const rowSuccess = new ActionRowBuilder()
-            .addComponents(
                 new ButtonBuilder()
                     .setCustomId('b3')
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Success)
                     .setEmoji('🤣'),
-            );
-
-        const rowDanger = new ActionRowBuilder()
-            .addComponents(
                 new ButtonBuilder()
                     .setCustomId(`b4`)
                     .setLabel("Click me!")
                     .setStyle(ButtonStyle.Danger)
                     .setEmoji('😇'),
-            );
-
-        const rowLink = new ActionRowBuilder()
-            .addComponents(
                 new ButtonBuilder()
                     // you cant .setCustomId() to a Link button
                     .setLabel("Click me!")
@@ -54,5 +38,5 @@ module.exports = {
             );
 
         // components array must be 5 or fewer.
-        await interaction.reply({ content: 'There are some buttons:', components: [rowPrimary, rowSecondary, rowSuccess, rowDanger, rowLink], ephemeral: false });},
+        await interaction.reply({ content: 'There are some buttons:', components: [row], ephemeral: false });},
 };
