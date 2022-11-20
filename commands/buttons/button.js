@@ -70,10 +70,20 @@ module.exports = {
 			}
 		};
 
+		// here we used interaction.channel.createMessageComponentCollector()
+		// rather than interaction.fetchReply().createMessageComponentCollector()
+		// to show you guys how a collector that focuses on channel works.
 		const collector = interaction.channel.createMessageComponentCollector({
 			filter,
 			max: 1, // We only want this collector instance collects 1 eligible message component
-			time: 15 * 1000, // 15.000 secs
+			//time: 15 * 1000, // 15.000 secs
+		});
+
+		const message = await interaction.fetchReply();
+		const collector2 = message.createMessageComponentCollector({
+			filter,
+			max: 1, // We only want this collector instance collects 1 eligible message component
+			//time: 15 * 1000, // 15.000 secs
 		});
 
 		collector.on('collect', async i => {
