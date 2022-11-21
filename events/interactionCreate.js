@@ -38,7 +38,6 @@ module.exports = {
 
 		} else if (interaction.isButton()) {
 			console.log("a button!");
-			//await command.execute(interaction);
 		} else if (interaction.isSelectMenu()) {
 			console.log("a select menu!");
 		} else {
