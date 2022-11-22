@@ -40,6 +40,8 @@ module.exports = {
 			console.log("a button!");
 		} else if (interaction.isSelectMenu()) {
 			console.log("a select menu!");
+		} else if (interaction.isModalSubmit()) {
+			console.log("a modal!");
 		} else {
 			// not a command
 		}
