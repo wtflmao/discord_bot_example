@@ -1,8 +1,8 @@
 # discord_bot_example
 
-built with [discord.js v14](https://github.com/discordjs/discord.js)
+Built with [Discord.js v14](https://github.com/discordjs/discord.js)
 
-some reference docs can be found here: [blog link](https://www.cnblogs.com/hhzm/)
+Some reference docs can be found here: [my blog](https://www.cnblogs.com/hhzm/)
 
 First thing first, git clone this project:
 ```shell
@@ -19,11 +19,13 @@ Then, create a config.json in the directory "discord_bot_example".
        "guildId": "serverid-goes-here"  
     }
     ```
-  - If you don't know what a "bot token" is, then i guess you haven't created your own discord application yet.
+  - If you don't know what a "bot token" is, then I guess you haven't created your own discord application yet.
 
-      Go to [Discord Developer Portal](https://discord.com/developers/applications) to set up your first very own application and add a very new bot to it. 
+      Go to [Discord Developer Portal](https://discord.com/developers/applications) to set up your first very own application and add a very new bot to it.
+  - clientId is your bot's snowflake id.
+  - guildId is your server's snowflake id.
 
-After set up that config.json thingy, use the following lines to deploy your slash commands.
+After setting up that config.json thingy, use the following lines to deploy your slash commands.
 ```shell
 cd discord_bot_example
 node deploy_commands.js
