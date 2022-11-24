@@ -14,7 +14,7 @@ module.exports = {
 			}
 
 			try {
-				await command.execute(interaction);
+				//await command.execute(interaction);
 				console.log(`${interaction.user.tag} in #${interaction.channel.name} triggered an interaction.`);
 			} catch (error) {
 				console.error(`Error executing ${interaction.commandName}`);
@@ -31,7 +31,7 @@ module.exports = {
 			}
 
 			try {
-				await command.autocomplete(interaction);
+				//await command.autocomplete(interaction);
 			} catch (error) {
 				console.error(error);
 			}
@@ -42,6 +42,17 @@ module.exports = {
 			console.log("a select menu!");
 		} else if (interaction.isModalSubmit()) {
 			console.log("a modal!");
+		} else if (interaction.isContextMenuCommand()) {
+			//interaction.deferReply();
+			if (interaction.isUserContextMenuCommand()) {
+				console.log("an APP command(user)!");
+			} else if (interaction.isMessageContextMenuCommand()) {
+				console.log("an APP command(message)!");
+			} else {
+				// not an APP command
+			}
+			const command = interaction.client.commands.get(interaction.commandName);
+			await command.execute(interaction);
 		} else {
 			// not a command
 		}
