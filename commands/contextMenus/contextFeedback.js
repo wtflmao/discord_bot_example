@@ -8,9 +8,13 @@ module.exports = {
         .setType(ApplicationCommandType.User),
     async execute(interaction) {
 
+        // We use interaction.client.users.cache.find() to get a User by its id
         const botInstance = interaction.client.users.cache.find(user => user.id === interaction.applicationId);
+
+        // Create a new Modal
         const modal = new ModalBuilder()
             .setCustomId('feedbackModal')
+            // username#discriminator be like: Elon#0001
             .setTitle(`Bot Feedback for ${botInstance.username}#${botInstance.discriminator}`);
 
         // Add components to modal...
@@ -71,9 +75,12 @@ module.exports = {
             // Get the data entered by the user
             const stars = submitted.fields.getTextInputValue('starsInput');
             const feedback = submitted.fields.getTextInputValue('feedbackInput');
+            // We use console.log() to display the feedbacks
             console.log(`FeedBack {@${interaction.user.id}, ${stars}, ${feedback}}`);
+            // Acknowledge the user that the feedback submitted successfully
             await submitted.reply({
                 content: `We've  got your feedback. Thanks for your time and honesty.`,
+                // We don't want other people see somebody sent a feedback, so set ephemeral field to true
                 ephemeral: true
             })
         }
