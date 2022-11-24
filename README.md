@@ -1,8 +1,8 @@
 # discord_bot_example
 
-Built with [Discord.js v14](https://github.com/discordjs/discord.js)
+Built with [Discord.js v14](https://discord.js.org/#/docs/discord.js/main/general/welcome)
 
-Some reference docs can be found here: [my blog](https://www.cnblogs.com/hhzm/)
+Some reference docs can be found here: [My Blog](https://www.cnblogs.com/hhzm/)
 
 First thing first, git clone this project:
 ```shell
