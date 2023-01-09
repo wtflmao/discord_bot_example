@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
 
@@ -28,14 +28,24 @@ for (let i = 0; i < cmdPaths.length; i++) {
 for (const fileArray of commandFiles) {
     for (const file of fileArray) {
         const command = require(`./${file}`);
-        client.commands.set(command.data.name, command);
+        // Set a new item in the Collection with the key as the command name and the value as the exported module
+        if ('data' in command && 'execute' in command) {
+            client.commands.set(command.data.name, command);
 
-        // if any 'aka' name exists
-        if (command.akaNames != null && command.akaNames !== []) {
-            for (let i = 0; i < command.akaNames.length; i++) {
-                client.commands.set(command.akaNames[i], command);
+            // if any 'aka' name exists
+            if (command.akaNames != null && command.akaNames !== []) {
+                for (let i = 0; i < command.akaNames.length; i++) {
+                    client.commands.set(command.akaNames[i], command);
+                }
+            }
+        } else {
+            if ('data' in command) {
+                console.log(`[WARNING] The command at ${file} is missing a required "execute" property.`);
+            } else {
+                console.log(`[WARNING] The command at ${file} is missing a required "data" property.`);
             }
         }
+
     }
 }
 

@@ -1,6 +1,6 @@
 # discord_bot_example
 
-Built with [Discord.js v14](https://discord.js.org/#/docs/discord.js/main/general/welcome)
+Built with [Discord.js v14.7.1](https://discord.js.org/#/docs/discord.js/main/general/welcome)
 
 Some reference docs can be found here: [My Blog](https://www.cnblogs.com/hhzm/)
 
@@ -9,9 +9,9 @@ First thing first, git clone this project:
 git clone https://github.com/wtflmao/discord_bot_example.git
 ```
 
-Then, create a config.json in the directory "discord_bot_example".
+Then, create a config.json in the directory `discord_bot_example`.
 
-- config.json looks like this:
+- `config.json` looks like this:
     ```json
     {  
        "token": "bot-token-goes-here",  
@@ -25,27 +25,28 @@ Then, create a config.json in the directory "discord_bot_example".
   - clientId is your bot's snowflake id.
   - guildId is your server's snowflake id.
 
-After setting up that config.json thingy, use the following lines to deploy your slash commands.
+After setting up that config.json thingy, you should run the following command to install discord.js:
 ```shell
 cd discord_bot_example
+```
+
+```shell
+npm install discord.js@v14.7.1
+```
+
+Then, use the following lines to deploy your commands.
+```shell
 node deploy_commands.js
 ```
 
- - If succeeded, use the following lines to start your bot.
-    ```shell
-    node .
-    ```
-    or
-    ```shell
-    node index.js
-    ```
- - If you meet an error like this:
-    > Error: Cannot find module 'discord.js'
-    
-    then you should run the following command:
-    ```shell
-    npm install discord.js @discordjs/rest discord-api-types
-    ```
+Then ,use the following command to start your bot.
+```shell
+node .
+```
+or
+```shell
+node index.js
+```
    
 That's all. 
 

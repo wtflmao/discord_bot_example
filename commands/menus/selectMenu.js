@@ -1,4 +1,4 @@
-const { ActionRowBuilder, EmbedBuilder, SelectMenuBuilder, SlashCommandBuilder } = require('discord.js');
+const { ActionRowBuilder, EmbedBuilder, StringSelectMenuBuilder, SlashCommandBuilder } = require('discord.js');
 const wait = require('node:timers/promises').setTimeout;
 
 module.exports = {
@@ -9,7 +9,7 @@ module.exports = {
 
         const row = new ActionRowBuilder()
             .addComponents(
-                new SelectMenuBuilder()
+                new StringSelectMenuBuilder()
                     .setCustomId('select_1')
                     .setPlaceholder('Nothing selected')
                     .addOptions(
