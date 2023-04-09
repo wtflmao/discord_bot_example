@@ -1,8 +1,41 @@
-const { Events } = require('discord.js');
-
+const { Events, Collection } = require('discord.js');
+let cooldowns = new Collection();
 module.exports = {
 	name: Events.InteractionCreate,
 	async execute(interaction) {
+		// we only need to check cooldown on a command, not on every single interaction
+		if (interaction.isCommand()) {
+			const command = await interaction.client.commands.get(interaction.commandName);
+
+			if (!cooldowns.has(command.data.name)) {
+				cooldowns.set(command.data.name, new Collection());
+			}
+
+			const now = Date.now(); // get current time
+			const timestamps = await cooldowns.get(command.data.name);
+			const defaultCooldownDuration = 0; // we set a DEFAULT value for those legacy command that didn't set a cooldown
+			const cooldownAmount = (command.cooldown ?? defaultCooldownDuration) * 1000;
+
+			if (timestamps.has(interaction.user.id)) {
+				const expirationTime = await timestamps.get(interaction.user.id) + cooldownAmount;
+				if (now < expirationTime) {
+					// not now, still wait
+					const expiredTimestamp = Math.round(expirationTime / 1000);
+					return interaction.reply({
+						content: `Please wait for <t:${expiredTimestamp}:R> more time before reusing the \`${command.data.name}\` command.`,
+						ephemeral: true
+					});
+				} else {
+					// cooldown expired for that user, proceed
+
+				}
+			}
+
+			// add a cooldown lock
+			await timestamps.set(interaction.user.id, now);
+			// wait and wait
+			await setTimeout(() => timestamps.delete(interaction.user.id), cooldownAmount);
+		}
 		
 		if (interaction.isChatInputCommand()) {
 
@@ -63,7 +96,7 @@ module.exports = {
 			await command.execute(interaction);
 		} else {
 			// not a command
-			console.error(`A new type of interaction detected. Please update your bot source code.`);
+			console.log(`A new type of interaction detected. Please update your bot source code.`);
 		}
 	},
 };
