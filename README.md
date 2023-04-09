@@ -1,15 +1,15 @@
 # discord_bot_example
 
-Built with [Discord.js v14.7.1](https://discord.js.org/#/docs/discord.js/main/general/welcome)
+Built with [Discord.js v14.9.0](https://discord.js.org/#/docs/discord.js/main/general/welcome)
 
-Some reference docs can be found here: [My Blog](https://www.cnblogs.com/hhzm/)
+Help and support docs can be found here: [My Blog](https://www.cnblogs.com/hhzm/)
 
-First thing first, git clone this project:
+To get started, first thing first, git clone this project:
 ```shell
 git clone https://github.com/wtflmao/discord_bot_example.git
 ```
 
-Then, create a config.json in the directory `discord_bot_example`.
+Then, create a config.json in the root directory `discord_bot_example`.
 
 - `config.json` looks like this:
     ```json
@@ -31,15 +31,15 @@ cd discord_bot_example
 ```
 
 ```shell
-npm install discord.js@v14.7.1
+npm install discord.js@v14.9.0
 ```
 
-Then, use the following lines to deploy your commands.
+Then, use the following command to deploy your commands.
 ```shell
 node deploy_commands.js
 ```
 
-Then ,use the following command to start your bot.
+Then, use the following command to start your bot.
 ```shell
 node .
 ```
